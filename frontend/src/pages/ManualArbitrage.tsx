@@ -65,12 +65,13 @@ const ManualArbitrage: React.FC = () => {
           marketApi.getCities(),
           marketApi.getIngredients(),
         ])
+        console.log("CIDADES DO BACKEND:", citiesRes.data)
         setCities(
           Array.from(
             new Set(
               citiesRes.data
                 .map((c: any) => c.name)
-                .filter((name: string) => name.toLowerCase() !== "caerleon")
+                // Não filtrar Caerleon
                 .concat(["Brecilien"])
             )
           )

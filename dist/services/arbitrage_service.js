@@ -102,7 +102,10 @@ class ArbitrageService {
     }
     async calculateArbitrageOpportunities() {
         const allAlchemyIngredients = await this.db.getAllAlchemyIngredients();
-        const cities = await this.db.getAllCities();
+        let cities = await this.db.getAllCities();
+        if (!cities.some((c) => c.name === "Brecilien")) {
+            cities.push({ id: 999, name: "Brecilien", code: "BRECILIEN" });
+        }
         const currentPrices = new Map();
         for (const ingredient of allAlchemyIngredients) {
             for (const city of cities) {

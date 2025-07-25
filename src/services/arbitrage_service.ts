@@ -27,7 +27,7 @@ export class ArbitrageService {
   // NATS removido
   private isCalculating: boolean = false
 
-  private readonly CALCULATION_INTERVAL_MINUTES = 2 // Frequência do cálculo de arbitragem
+  private readonly CALCULATION_INTERVAL_MINUTES = 2 // Frequência do cálculo de arbitragem (agora a cada 2 minutos)
   private readonly SALES_TAX_RATE = 0.04 // 4% de taxa de venda
   private readonly MIN_PROFIT_MARGIN = 5.0 // Margem de lucro mínima desejada (ex: 5%)
 
@@ -172,8 +172,7 @@ export class ArbitrageService {
   private async calculateArbitrageOpportunities(): Promise<void> {
     const allAlchemyIngredients = await this.db.getAllAlchemyIngredients() // Renomeado
     let cities = await this.db.getAllCities()
-    // Filtrar Caerleon e garantir Brecilien
-    cities = cities.filter((c) => c.name !== "Caerleon")
+    // Remover qualquer filtro de Caerleon e garantir Brecilien
     if (!cities.some((c) => c.name === "Brecilien")) {
       cities.push({ id: 999, name: "Brecilien", code: "BRECILIEN" }) // Ajuste o id conforme o banco
     }
@@ -205,6 +204,7 @@ export class ArbitrageService {
       const t7 = itemTiers.find((ing) => ing.tier === 7)
       for (const buyCity of cities) {
         for (const sellCity of cities) {
+          // Permitir comparação de compra e venda na mesma cidade
           if (buyCity.id === sellCity.id) continue
           // T5 -> 2x T3
           if (t5 && t3) {

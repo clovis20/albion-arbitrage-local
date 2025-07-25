@@ -88,6 +88,21 @@ const Arbitrage: React.FC = () => {
     return acc + (netProfit > 0 ? netProfit : 0)
   }, 0)
 
+  // Calcular Lucro Médio apenas das oportunidades exibidas na tabela
+  const avgProfitPercentage =
+    filteredOpportunities.length > 0
+      ? filteredOpportunities.reduce((sum, opportunity) => {
+          const quantidade = opportunity.quantity_multiplier || 1
+          const TAXA = 0.04
+          const totalCost = opportunity.buy_price
+          const totalRevenue = opportunity.sell_price * quantidade
+          const netRevenue = totalRevenue * (1 - TAXA)
+          const netProfit = netRevenue - totalCost
+          const profitMargin = totalCost > 0 ? (netProfit / totalCost) * 100 : 0
+          return sum + profitMargin
+        }, 0) / filteredOpportunities.length
+      : 0
+
   // Mapeamento para nome amigável
   const ITEM_BASE_MAP: Record<string, string> = {
     PANTHER: "Shadow Claws",
@@ -199,13 +214,8 @@ const Arbitrage: React.FC = () => {
           <Paper>
             <Box p={2}>
               <Typography variant="h6" color="info.main">
-                {opportunities.length > 0
-                  ? formatPercentage(
-                      opportunities.reduce(
-                        (sum, opp) => sum + opp.profit_percentage,
-                        0
-                      ) / opportunities.length
-                    )
+                {filteredOpportunities.length > 0
+                  ? formatPercentage(avgProfitPercentage)
                   : "0%"}
               </Typography>
               <Typography variant="body2" color="text.secondary">

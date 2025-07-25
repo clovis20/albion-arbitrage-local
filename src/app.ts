@@ -98,7 +98,7 @@ class App {
       // NATS removido - usando API REST
 
       // Iniciar busca de dados da API do Albion
-      this.albionAPIService.startPeriodicDataFetch(5) // Buscar dados a cada 5 minutos
+      this.albionAPIService.startPeriodicDataFetch(2) // Buscar dados a cada 2 minutos
 
       this.arbitrageService.startPeriodicCalculation()
 

@@ -63,7 +63,7 @@ class App {
     async start() {
         try {
             await this.databaseService.connect();
-            this.albionAPIService.startPeriodicDataFetch(5);
+            this.albionAPIService.startPeriodicDataFetch(2);
             this.arbitrageService.startPeriodicCalculation();
             const PORT = process.env.PORT || 5000;
             this.server.listen(PORT, () => {

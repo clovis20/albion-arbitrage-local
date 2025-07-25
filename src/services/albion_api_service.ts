@@ -180,6 +180,7 @@ export class AlbionAPIService {
         "Fort Sterling": 4,
         Lymhurst: 5,
         Caerleon: 6,
+        Brecilien: 7, // Adicionado para reconhecer Brecilien
       }
 
       const cityId = cityMap[data.city]
@@ -210,7 +211,7 @@ export class AlbionAPIService {
     }
   }
 
-  startPeriodicDataFetch(intervalMinutes: number = 5) {
+  startPeriodicDataFetch(intervalMinutes: number = 2) {
     logger.info(
       `📅 Starting periodic data fetch every ${intervalMinutes} minutes`
     )

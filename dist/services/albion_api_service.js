@@ -98,6 +98,7 @@ class AlbionAPIService {
                 "Fort Sterling",
                 "Lymhurst",
                 "Caerleon",
+                "Brecilien",
             ];
             for (const itemId of itemsToFetch) {
                 try {
@@ -129,6 +130,7 @@ class AlbionAPIService {
                 "Fort Sterling": 4,
                 Lymhurst: 5,
                 Caerleon: 6,
+                Brecilien: 7,
             };
             const cityId = cityMap[data.city];
             if (!cityId) {
@@ -154,7 +156,7 @@ class AlbionAPIService {
             logger_1.logger.error(`Error saving market data for ${data.item_id}: ${error}`);
         }
     }
-    startPeriodicDataFetch(intervalMinutes = 5) {
+    startPeriodicDataFetch(intervalMinutes = 2) {
         logger_1.logger.info(`📅 Starting periodic data fetch every ${intervalMinutes} minutes`);
         this.processMarketData();
         setInterval(() => {
